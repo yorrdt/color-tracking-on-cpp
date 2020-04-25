@@ -1,0 +1,21 @@
+# depslib dependency file v1.0
+1587235318 source:/home/administrator/Programming/C++/test1/gl.cpp
+	<iostream>
+	<GL/glew.h>
+	<GLFW/glfw3.h>
+	"header.h"
+
+1587238591 source:/home/administrator/Programming/C++/test1/main.cpp
+	<iostream>
+	<thread>
+	"header.h"
+
+1587228421 /home/administrator/Programming/C++/test1/header.h
+
+1587238666 source:/home/administrator/Programming/C++/test1/cv.cpp
+	<iostream>
+	<opencv4/opencv2/opencv.hpp>
+	<opencv4/opencv2/core.hpp>
+	<opencv4/opencv2/imgproc/imgproc.hpp>
+	<opencv4/opencv2/highgui/highgui.hpp>
+

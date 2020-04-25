@@ -1,6 +1,6 @@
 # testq
 
-**Code::Blocks flags
+**Code::Blocks flags**
 
 -lglfw
 -lglut

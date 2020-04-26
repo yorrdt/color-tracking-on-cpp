@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 #include <opencv4/opencv2/opencv.hpp>
 #include <opencv4/opencv2/core.hpp>
@@ -6,7 +7,6 @@
 #include <opencv4/opencv2/highgui/highgui.hpp>
 
 using namespace cv;
-
 
 int ocvWindow() {
 
@@ -16,35 +16,41 @@ int ocvWindow() {
     VideoCapture cap(0);
     if(cap.isOpened() == false) {
         std::cout << "Cannot open video capture" << std::endl;
-        std::cin.get();
+        //std::cin.get();
         return -1;
     }
 
     Mat frame, hsv, thresh;
 
-     int lowH = 90;     // Set Hue
-     int highH = 150;
-
-     int lowS = 70;     // Set Saturation
-     int highS = 255;
-
-     int lowV = 70;     // Set Value
-     int highV = 225;
-
     while(true) {
         cap.read(frame);
+        if (!frame.data) {
+            std::cout << "frame not found" << std::endl;
+            return -1;
+        }
+
+        GaussianBlur(frame, frame, Size(11, 11), 0);
 
         cvtColor(frame, hsv, COLOR_BGR2HSV);
 
-        inRange(hsv, Scalar(lowH, lowS, lowV), Scalar(highH, highS, highV), thresh);
+        inRange(hsv, Scalar(90, 150, 70), Scalar(150, 255, 255), thresh);
 
-        GaussianBlur(thresh, thresh, Size(3, 3), 0);
         dilate(thresh, thresh, 2);
         erode(thresh, thresh, 4);
 
+        std::vector<std::vector<Point>> contours;
+        Mat contourOutput = thresh.clone();
+        findContours( contourOutput, contours, RETR_LIST, CHAIN_APPROX_NONE);
+
+        //Draw the contours
+        Mat contourImage(frame.size(), CV_8UC3, Scalar(0,0,0));
+        for(size_t i = 0; i < contours.size(); i++) {
+            drawContours(contourImage, contours, i, Scalar(255, 255, 255));
+        }
+
         //namedWindow("cvWindow"); // , WINDOW_NORMAL
-        imshow("cvWindow-Original", frame);
-        imshow("cvWindow-Threshold", thresh);
+        imshow("cvWindow", thresh);
+        imshow("cvWindow2", contourImage);
 
         if(waitKey(10) == 27)
             break;

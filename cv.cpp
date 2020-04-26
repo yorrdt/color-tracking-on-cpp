@@ -20,20 +20,38 @@ int ocvWindow() {
         return -1;
     }
 
+    Mat frame, hsv, thresh;
+
+     int lowH = 90;     // Set Hue
+     int highH = 150;
+
+     int lowS = 70;     // Set Saturation
+     int highS = 255;
+
+     int lowV = 70;     // Set Value
+     int highV = 225;
 
     while(true) {
-        Mat frame;
         cap.read(frame);
 
-        namedWindow("cvWindow"); // , WINDOW_NORMAL
-        imshow("cvWindow", frame);
+        cvtColor(frame, hsv, COLOR_BGR2HSV);
+
+        inRange(hsv, Scalar(lowH, lowS, lowV), Scalar(highH, highS, highV), thresh);
+
+        GaussianBlur(thresh, thresh, Size(3, 3), 0);
+        dilate(thresh, thresh, 2);
+        erode(thresh, thresh, 4);
+
+        //namedWindow("cvWindow"); // , WINDOW_NORMAL
+        imshow("cvWindow-Original", frame);
+        imshow("cvWindow-Threshold", thresh);
 
         if(waitKey(10) == 27)
             break;
     }
 
     cap.release();
-    destroyWindow("cvWindow");
+    destroyAllWindows();
 
     return 0;
 }

@@ -36,6 +36,6 @@ Linux Mint
 * "/usr/include/GLFW",
 * "/usr/local/include/opencv4"
 
-![Illustration](https://github.com/yorrdt/testq/blob/master/scr.jpg)
+![Illustration](https://github.com/yorrdt/hand-point-tracking/blob/master/scr.jpg)
 
 

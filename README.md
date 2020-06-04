@@ -1,4 +1,5 @@
-# testq
+# hand-point-tracking 
+Linux Mint
 
 ## To compile in Code::Blocks your should add flags and includes:
 
